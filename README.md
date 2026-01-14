@@ -1,1 +1,0 @@
-# PyQSense-docs
