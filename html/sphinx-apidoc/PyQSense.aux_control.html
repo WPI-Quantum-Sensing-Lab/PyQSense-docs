@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Module: aux_control &#8212; PROJECT TITLE  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Module: cam_control" href="PyQSense.cam_control.html" />
+    <link rel="prev" title="PyQSense" href="PyQSense.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-aux-control">
+<h1>Module: aux_control<a class="headerlink" href="#module-aux-control" title="Link to this heading">¶</a></h1>
+<p>Auxiliary lab instrument control library.</p>
+<dl class="py class">
+<dt class="sig sig-object py">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">PyQSense.aux_control.</span></span><span class="sig-name descname"><span class="pre">IEEE4882_Instrument</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">err_check_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'generic'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>An instrument conforming to the IEEE 488.2 standard.</p>
+<p>This instrument implements the minimum set of features to be considered
+compliant.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">address</span></span></dt>
+<dd><p>The VISA resource name of the device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">_instrument</span></span></dt>
+<dd><p>pyvisa Resource object
+representing the instrument. There is no need to access this
+directly, unless debugging.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pyvisa.resources.Resource</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">err_check_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'generic'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Initialize the connection with the device.</p>
+<p>Ensure that the baudrate of the device is properly specified in the
+function call.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> (<em>str</em>) – The VISA resource name of the device. Refer to the
+LabVIEW manual linked to at the top of this page.</p></li>
+<li><p><strong>model_name</strong> (<em>str</em>) – The model name of the instrument, as returned by
+an <code class="docutils literal notranslate"><span class="pre">*IDN?</span></code> command. Used in verifying the correct device is
+connected.</p></li>
+<li><p><strong>baudrate</strong> (<em>int</em>) – Symbol rate of the physical connection, in baud.
+Default is 115200.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – The supplied <strong>model_name</strong> does not match the
+    detected model name.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">PyQSense.aux_control.</span></span><span class="sig-name descname"><span class="pre">SCPI_Instrument</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">err_check_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'scpi'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>An instrument compliant with the base SCPI standard.</p>
+<p>This instrument implements the minimum functionality considered to be SCPI
+compliant (see SCPI 1999.0, §4.2).</p>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">err_check_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'scpi'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Initialize the connection with the device.</p>
+<p>Ensure that the baudrate of the device is properly specified in the
+function call.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> (<em>str</em>) – The VISA resource name of the device. Refer to the
+LabVIEW manual linked to at the top of this page.</p></li>
+<li><p><strong>model_name</strong> (<em>str</em>) – The model name of the instrument, as returned by
+an <code class="docutils literal notranslate"><span class="pre">*IDN?</span></code> command. Used in verifying the correct device is
+connected.</p></li>
+<li><p><strong>baudrate</strong> (<em>int</em>) – Symbol rate of the physical connection, in baud.
+Default is 115200.</p></li>
+<li><p><strong>err_check_method</strong> (<em>str</em>) – One of “scpi”, “esr”, “generic”. If the
+method is “scpi”, the errors will be checked through the
+<code class="docutils literal notranslate"><span class="pre">:SYSTem:ERRor?</span></code> query command. See the parent class
+documentation for the details of the other error check
+methods.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – The supplied <strong>model_name</strong> does not match the
+    detected model name.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">PyQSense.aux_control.</span></span><span class="sig-name descname"><span class="pre">SCPI_Power_Supply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">err_check_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'scpi'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>SCPI power supply instrument.</p>
+<p>A power supply instrument, fully supporting the base functionality of the
+SCPI “Power Supply” instrument class.</p>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">enable_output</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Open the output terminals.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">disable_output</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Close the output terminals.</p>
+<p>Per SCPI specification, this means that “the terminals are at maximum
+isolation from the signal”.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">set_current</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">current</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Set the output current (in A).</p>
+<p><code class="docutils literal notranslate"><span class="pre">:SOURce:CURRent</span> <span class="pre">&lt;numeric_value&gt;</span></code> implies
+<code class="docutils literal notranslate"><span class="pre">:SOURce:CURRent:LEVel:IMMediate:AMPLitude</span> <span class="pre">&lt;numeric_value&gt;</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>current</strong> (<em>float</em>) – The current to set, in Amperes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">set_voltage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">voltage</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Set the output voltage (in V).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>voltage</strong> (<em>float</em>) – The voltage to set, in Volts.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">set_voltage_limit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">voltage</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Set the output voltage limit (in V).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>voltage</strong> (<em>float</em>) – The voltage to set, in Volts.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">PyQSense.aux_control.</span></span><span class="sig-name descname"><span class="pre">SCPI_RF_Generator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">err_check_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'scpi'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Microwave of RF source instrument.</p>
+<p>A microwave or RF source, supporting the base functionality of the SCPI
+“RF &amp; Microwave Source” instrument class.</p>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">enable_output</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Open the output terminals.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">disable_output</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Close the output terminals.</p>
+<p>Per SCPI specification, this means that “the terminals are at maximum
+isolation from the signal”.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">set_amplitude</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amplitude</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Set the amplitude of the signal (in dBm).</p>
+<p>Per specification, the command <code class="docutils literal notranslate"><span class="pre">:SOURce:POWer:LEVel:IMMediate:AMPLitude</span>
+<span class="pre">&lt;numeric-value&gt;</span></code> is implied by <code class="docutils literal notranslate"><span class="pre">:SOURce:POWer</span> <span class="pre">&lt;numeric-value&gt;</span></code>.
+Furthermore, the units on the value are set to the default, which
+depends on the device. The <code class="docutils literal notranslate"><span class="pre">:UNIT:POWer</span> <span class="pre">DBM</span></code> command will set the
+default units for the power subsystem to decibel-milliwatts. However,
+some devices which are not fully SCPI-compliant (TPI-1001-B) do not
+implement the unit subsystem. An alternative method of specifying the
+units is by appending the units to the end of a command.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>amplitude</strong> (<em>float</em>) – The amplitude to set, in dBm.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">set_frequency</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">freq</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Set the frequency of the signal (in Hz).</p>
+<p>The standard does not support any unit other than Hz. However, devices
+may implement other default units.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>freq</strong> (<em>float</em>) – Frequency to set, in Hz.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">PyQSense.aux_control.</span></span><span class="sig-name descname"><span class="pre">SRS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baudrate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">115200</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Stanford Research Systems instruments signal generator via GPIB.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">address</span></span></dt>
+<dd><p>The VISA resource name of the instrument.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">_srs</span></span></dt>
+<dd><p>Internal object, representing the
+instrument as a VISA resource.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pyvisa.resources.Resource</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baudrate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">115200</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Initialize the connection with the signal generator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> (<em>str</em>) – The VISA resource name (over GPIB in our
+configuration).</p></li>
+<li><p><strong>model_name</strong> (<em>str</em>) – The model name of the SRS instrument, as
+returned by the instrument after an <code class="docutils literal notranslate"><span class="pre">*IDN?</span></code> SCPI command.
+Used in verifying the correct device is connected.</p></li>
+<li><p><strong>baudrate</strong> (<em>int</em>) – Symbol rate of the physical connection, in baud.
+Default is 115200.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – The supplied <strong>model_name</strong> does not match the
+    detected model name.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">enable_output</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Enable SRS output.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">disable_output</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Disable SRS output.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">set_amplitude</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rf_amplitude</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Set SRS output amplitude.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rf_amplitude</strong> (<em>float</em>) – Amplitude of the output signal, in dBm.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">set_frequency</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">freq</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Set SRS output frequency.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>freq</strong> (<em>float</em>) – Frequency of the output signal, in Hz.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">PyQSense.aux_control.</span></span><span class="sig-name descname"><span class="pre">TPI_RF_Generator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">err_check_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'generic'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baud_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3000000</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Control a TPI-1001-B microwave generator.</p>
+<p>This class implements two modes of communication with the TPI: SCPI and a
+vendor-specific packet protocol. The device only supports a limited subset
+of SCPI commands.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The SCPI control mode is available from firmware version 1.074 or newer,
+and must be enabled in TPI-Link, the companion software.</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">address</span></span></dt>
+<dd><p>VISA address of the TPI device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">_instrument</span></span></dt>
+<dd><p>Internal object, representing
+the instrument as a VISA resource.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pyvisa.resources.Resource</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">err_check_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'generic'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baud_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3000000</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Initalize the connection to the RF generator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> (<em>str</em>) – VISA address of the TPI device.</p></li>
+<li><p><strong>model_name</strong> (<em>str</em>) – not yet implemented.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeWarning</strong> – There was an issue in enabling “user control”
+    mode, a requirement for the packet-based communication
+    protocol.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">set_amplitude</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rf_amplitude</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Sets the power of the output signal.</p>
+<p>The TPI’s resolution is 1 dBm. If a non-integer value is passed as
+rf_amplitude, it will be converted to an integer by rounding down.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rf_amplitude</strong> (<em>int</em>) – The output power to set, in dBm.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – The amplitude has been requested to be a value less
+    than -90 dBm. The manufacturer discourages such low values.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">set_frequency</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">freq</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Sets the frequency of the output signal in Hz.</p>
+<p>The frequency resolution is up to the third decimal place, in MHz.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>freq</strong> (<em>float</em>) – the frequency to set, in Hz.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">PyQSense.aux_control.</span></span><span class="sig-name descname"><span class="pre">ThorLabs_Kinesis_Motor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">motor_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inverted</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Control a ThorLabs Kinesis motor.</p>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">motor_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inverted</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Initialize the connection with the motor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>motor_id</strong> (<em>str</em>) – The ID of the motor to connect to.</p></li>
+<li><p><strong>limits</strong> (<em>list</em><em>[</em><em>float</em><em>]</em><em>|</em><em>tuple</em><em>[</em><em>float</em><em>]</em>) – The minimum position and the
+maximum position of the motor.</p></li>
+<li><p><strong>home_offset</strong> (<em>float</em>) – The offset to apply when homing the motor.
+Defaults to 0. This is the distance from the home position
+to the zero position of the motor, in m.</p></li>
+<li><p><strong>inverted</strong> (<em>bool</em>) – Whether to invert the direction in which the
+motors move.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">home</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wait</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Home the motor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wait</strong> (<em>bool</em>) – Whether to wait for the motor to finish homing.</p></li>
+<li><p><strong>force</strong> (<em>bool</em>) – Whether to force the motor to home, even if it is
+already homed.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">move_absolute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Move the motor to an absolute position.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>position</strong> (<em>float</em>) – The position to move to, in m.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">move_relative</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Move the motor to a relative position.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>distance</strong> (<em>float</em>) – The position to move to, in m.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">wait</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Wait for the motor to finish moving.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">PyQSense.aux_control.</span></span><span class="sig-name descname"><span class="pre">ThorLabs_Elliptec_Rotation_Mount</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">com_port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inverted</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Control a ThorLabs Kinesis motor.</p>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">com_port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inverted</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Initialize the connection with the motor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>motor_id</strong> (<em>str</em>) – The ID of the motor to connect to.</p></li>
+<li><p><strong>limits</strong> (<em>list</em><em>[</em><em>float</em><em>]</em><em>|</em><em>tuple</em><em>[</em><em>float</em><em>]</em>) – The minimum position and the
+maximum position of the motor.</p></li>
+<li><p><strong>home_offset</strong> (<em>float</em>) – The offset to apply when homing the motor.
+Defaults to 0. This is the distance from the home position
+to the zero position of the motor, in m.</p></li>
+<li><p><strong>inverted</strong> (<em>bool</em>) – Whether to invert the direction in which the
+motors move.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">home</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Home the motor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wait</strong> (<em>bool</em>) – Whether to wait for the motor to finish homing.</p></li>
+<li><p><strong>force</strong> (<em>bool</em>) – Whether to force the motor to home, even if it is
+already homed.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">move_absolute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Move the motor to an absolute position.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>position</strong> (<em>float</em>) – The position to move to, in m.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">move_relative</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distance</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Move the motor to a relative position.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>distance</strong> (<em>float</em>) – The position to move to, in m.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">PROJECT TITLE</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="PyQSense.html">PyQSense</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Module: aux_control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="PyQSense.cam_control.html">Module: cam_control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="PyQSense.const.html">Module: const</a></li>
+<li class="toctree-l3"><a class="reference internal" href="PyQSense.devices.html">Module: devices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="PyQSense.experiments.html">Module: experiments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="PyQSense.gui.html">Module: gui</a></li>
+<li class="toctree-l3"><a class="reference internal" href="PyQSense.spinapi.html">Module: spinapi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="PyQSense.ttl_control.html">Module: ttl_control</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">API Documentation</a><ul>
+  <li><a href="PyQSense.html">PyQSense</a><ul>
+      <li>Previous: <a href="PyQSense.html" title="previous chapter">PyQSense</a></li>
+      <li>Next: <a href="PyQSense.cam_control.html" title="next chapter">Module: cam_control</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0+/65855b5</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../_sources/sphinx-apidoc/PyQSense.aux_control.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

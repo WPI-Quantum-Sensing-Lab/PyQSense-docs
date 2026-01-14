@@ -1,0 +1,6 @@
+
+Module\: cam\_control
+=====================
+
+.. automodule:: PyQSense.cam_control
+   :no-index:

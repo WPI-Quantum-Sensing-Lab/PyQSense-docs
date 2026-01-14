@@ -1,0 +1,6 @@
+
+Module\: devices
+================
+
+.. automodule:: PyQSense.devices
+   :no-index:

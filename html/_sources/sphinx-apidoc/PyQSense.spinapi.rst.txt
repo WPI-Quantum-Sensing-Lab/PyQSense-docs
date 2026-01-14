@@ -1,0 +1,6 @@
+
+Module\: spinapi
+================
+
+.. automodule:: PyQSense.spinapi
+   :no-index:
