@@ -1,6 +1,6 @@
 
-Module\: ttl\_control
-=====================
+ttl\_control
+============
 
 .. automodule:: PyQSense.ttl_control
    :no-index:

@@ -1,6 +1,6 @@
 
-Module\: experiments
-====================
+experiments
+===========
 
 .. automodule:: PyQSense.experiments
    :no-index:

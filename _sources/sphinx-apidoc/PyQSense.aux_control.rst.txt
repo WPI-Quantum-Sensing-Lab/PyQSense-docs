@@ -1,6 +1,6 @@
 
-Module\: aux\_control
-=====================
+aux\_control
+============
 
 .. automodule:: PyQSense.aux_control
    :no-index:

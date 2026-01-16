@@ -1,6 +1,6 @@
 
-Module\: gui
-============
+gui
+===
 
 .. automodule:: PyQSense.gui
    :no-index:

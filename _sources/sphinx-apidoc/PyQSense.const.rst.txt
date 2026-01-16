@@ -1,6 +1,6 @@
 
-Module\: const
-==============
+const
+=====
 
 .. automodule:: PyQSense.const
    :no-index:
