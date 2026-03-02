@@ -1,0 +1,8 @@
+
+📁 aux\_control
+===============
+
+.. automodule:: PyQSense.aux_control
+   :members:
+   :show-inheritance:
+   :undoc-members:

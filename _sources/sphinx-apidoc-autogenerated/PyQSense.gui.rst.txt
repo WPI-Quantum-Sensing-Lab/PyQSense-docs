@@ -1,0 +1,8 @@
+
+📁 gui
+======
+
+.. automodule:: PyQSense.gui
+   :members:
+   :show-inheritance:
+   :undoc-members:

@@ -1,6 +1,0 @@
-
-gui
-===
-
-.. automodule:: PyQSense.gui
-   :no-index:

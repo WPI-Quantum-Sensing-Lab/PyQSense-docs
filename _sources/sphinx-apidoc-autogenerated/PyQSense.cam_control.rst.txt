@@ -1,0 +1,8 @@
+
+📁 cam\_control
+===============
+
+.. automodule:: PyQSense.cam_control
+   :members:
+   :show-inheritance:
+   :undoc-members:

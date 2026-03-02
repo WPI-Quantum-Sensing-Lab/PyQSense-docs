@@ -1,0 +1,8 @@
+
+📁 const
+========
+
+.. automodule:: PyQSense.const
+   :members:
+   :show-inheritance:
+   :undoc-members:

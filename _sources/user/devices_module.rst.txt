@@ -1,0 +1,141 @@
+The ``devices`` Module
+======================
+
+PyQSense internally references a ``devices`` module that enables communication with equipment.
+The module must export instances of device classes with specific names:
+
+.. TODO:DOC is this list comprehensive?
+
+* ``ttl`` (:py:class:`PyQSense.ttl_control.Pulse_Blaster`)
+* ``cam`` (:py:class:`PyQSense.cam_control.Basler_Camera`)
+* ``mw`` (:py:class:`PyQSense.aux_control.SRS_SG380`)
+* ``stage_x``, ``stage_y``, ``stage_z`` (:py:class:`PyQSense.aux_control.ThorLabs_Kinesis_Motor`)
+
+.. note::
+   Strictly speaking, the device classes do not specifically have to be the ones listed above; they may be any class that implements the same public methods as defined by our concrete implementations in classes such as :py:class:`PyQSense.ttl_control.Pulse_Blaster`.
+
+The ``devices`` module instantiates the abstract classes in :py:mod:`PyQSense.aux_control`, :py:mod:`PyQSense.ttl_control`, and :py:mod:`PyQSense.cam_control`.
+It is site-local, containing information that varies depending on the exact equipment used and the device connection method (e.g. the specific serial, parallel, or USB port active on the control computer).
+Because of this volatility, it is not practical to distribute this file in a generic packaging of PyQSense; the user is responsible for creating and managing it.
+
+``devices`` needs to be on the `python module search path`_, and its file must be named ``devices.py``.
+
+.. _python module search path: https://docs.python.org/tutorial/modules.html#the-module-search-path
+
+.. tip::
+   To quickly add a folder to the module search path, insert it into ``sys.path``:
+
+   .. code:: python
+
+      from sys import path
+      path.insert(0,'/path/to/folder')
+
+Example Implementation
+----------------------
+
+This is an example implementation of ``devices.py``.
+It uses an environment variable to locate a YAML configuration file, ``devices.yaml``, containing parameters to pass to each device's ``__init__`` method and some meta-information about the devices.
+Note that ``devices.yaml`` is an implementation detail of this ``devices.py``.
+
+.. TODO:DOC document this specific implementation in more detail?
+
+.. code:: python
+
+   import os
+   import sys
+   from pathlib import Path
+
+   import yaml
+
+   from PyQSense import aux_control, cam_control, ttl_control
+   from PyQSense.const import *
+   from PyQSense.ttl_control import ttl_channel
+
+   # Use environment variable to specify a separate site-local configuration
+   config_path = os.getenv("PYQSENSE_CONFIG_PATH", None)
+   if config_path is None:
+     raise ImportError(
+         "No configuration directory. Please set the PYQSENSE_CONFIG_PATH environment variable."
+     )
+   config_path = Path(config_path).absolute()
+   sys.path.append(str(config_path))
+   if not (config_path / "devices.yaml").exists():
+     raise FileNotFoundError(f"devices.yaml file missing from configuration directory")
+   with open(config_path / "devices.yaml", "r") as file:
+     config = yaml.safe_load(file)
+   ttl_config = config.pop("ttl", {})
+
+   channel_configs = ttl_config.pop("channels", {})
+   ttl_channels = []
+   for channel_name, channel_args in channel_configs.items():
+     if "start_offset" in channel_args:
+         channel_args["start_offset"] = channel_args["start_offset"] * SECOND
+     if "width_offset" in channel_args:
+         channel_args["width_offset"] = channel_args["width_offset"] * SECOND
+     ttl_channels.append(ttl_channel(channel_name, **channel_args))
+
+   # specify the class name implementing the TTL card, e.g. "Pulse_Blaster"
+   ttl_type = ttl_config.pop("type")
+   ttl_device = getattr(ttl_control, ttl_type)
+   ttl = ttl_device(**ttl_config, channels=ttl_channels)
+
+   cam_config = config.pop("cam", {})
+   cam_type = cam_config.pop("type")
+   cam_device = getattr(cam_control, cam_type)
+   # splat the configuration into the __init__ method
+   cam = cam_device(**cam_config)
+
+   for device_name, device_args in config.items():
+     device_type = device_args.pop("type")
+     device_class = getattr(aux_control, device_type)
+     setattr(sys.modules[__name__], device_name, device_class(**device_args))
+
+A corresponding YAML configuration could look like
+
+.. code:: yaml
+
+   ttl:
+     type: "Pulse_Blaster"
+     channels:
+       channel_a:
+         channel_number: 0
+         start_offset: 3
+         width_offset: 11
+       channel_b:
+         channel_number: 1
+         start_offset: 0
+         width_offset: 2
+   cam:
+     type: "Basler_Camera"
+     frame_trigger: "Line1"
+     burst_trigger: "Line2"
+   mw:
+     type: "SRS_SG380"
+     address: "ASRL4::INSTR"
+     model_name: "Stanford Research Systems,SG380,s/n8888,ver1.520"
+   ps:
+     type: "SRS_DC215"
+     address: "ASRL6::INSTR"
+     model_name: "Stanford Research Systems,DC215,s/n1234,ver1.009"
+     baud_rate: 9600
+     send_end: True
+   stage_x:
+     type: "ThorLabs_Kinesis_Motor"
+     motor_id: 12345
+     limits:
+       - 10
+       - 75.56
+   stage_y:
+     type: "ThorLabs_Kinesis_Motor"
+     motor_id: 54321
+     limits:
+       - 0
+       - 100
+     home_offset: 1.84
+   stage_z:
+     type: "ThorLabs_Kinesis_Motor"
+     motor_id: 8433894398348943
+     limits:
+       - 0
+       - 100
+     inverted: True

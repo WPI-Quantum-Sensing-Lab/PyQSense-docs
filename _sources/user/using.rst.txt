@@ -1,0 +1,35 @@
+Using PyQSense
+==============
+
+Installation
+------------
+PyQSense is provided as a python package.
+Here is a quick recipe for installation::
+
+    $ git clone https://github.com/WPI-Quantum-Sensing-Lab/PyQSense.git
+    $ cd PyQSense
+    $ python -m venv .venv
+    $ source .venv/bin/activate
+    $ pip install .
+
+PyQSense can be installed in other ways too.
+If it is available on `PyPI`_, then a simple ``pip install`` will work without the need to clone the git repository.
+Any package manager (e.g. ``uv``) that can handle python projects using ``pyproject.toml`` files should be able to install PyQSense.
+
+.. _PyPI: https://pypi.org
+
+PyQSense comes with some optional dependency groups that one may choose to install in addition to the base package using ``pip``'s ``--group`` flag.
+Consult the ``pyproject.toml`` for the available groups.
+
+Configuration
+-------------
+You need to create a specific python module that accounts for variations in the equipment and experimental setup.
+The details are in :doc:`devices_module`.
+
+.. TODO:DOC mention the specific configuration system that we have using devices.yaml?
+
+Running PyQSense
+----------------
+.. TODO:DOC
+
+.. how to start experiments, do not include info about our specific implementation of devices.py

@@ -1,17 +1,15 @@
-PyQSense
-========
+📦 PyQSense
+===========
 
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 2
 
    PyQSense.aux_control
    PyQSense.cam_control
    PyQSense.const
-   PyQSense.devices
    PyQSense.experiments
    PyQSense.gui
-   PyQSense.spinapi
    PyQSense.ttl_control
 
 
