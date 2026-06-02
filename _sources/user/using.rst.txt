@@ -32,15 +32,13 @@ The available options are browseable `here`_ and further documented in :doc:`opt
 
 .. _here: /_static/devices.schema.html
 
-Running PyQSense
-----------------
+Running Experiments Using PyQSense
+----------------------------------
 .. TODO:DOC
 
 .. how to start experiments, do not include info about our specific implementation of devices.py
 
-PyQSense is controlled through a GUI application. Launch the app by TODO:DOC
-
-* manually instantiate :py:class:`PyQSense.gui.Experiment_Process` and call `run_exp` method???
-* saves in .npz format
-* run from gui
-* no cli? TODO:DOC
+PyQSense is a code library; launching and managing experiments is a task delegated to the user.
+One way to do this is by using python scripts that configure site-specific settings and experiment-specific parameters, then selectively launching them based on the desired configuration.
+The launcher should subclass :py:class:`PyQSense.gui.Experiment_Process` and use :py:meth:`PyQSense.gui.Experiment_Process.set_exp` to load one of the experiments in :py:mod:`PyQSense.experiments`.
+For manual calibration of the experimental apparatus, instantiating :py:class:`PyQSense.gui.Viewer_Window` may be of interest.
