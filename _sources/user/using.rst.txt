@@ -4,7 +4,9 @@ Using PyQSense
 Installation
 ------------
 PyQSense is provided as a python package.
-Here is a quick recipe for installation::
+Here is a quick recipe for installation
+
+.. code-block:: shell
 
     $ git clone https://github.com/WPI-Quantum-Sensing-Lab/PyQSense.git
     $ cd PyQSense
@@ -14,22 +16,31 @@ Here is a quick recipe for installation::
 
 PyQSense can be installed in other ways too.
 If it is available on `PyPI`_, then a simple ``pip install`` will work without the need to clone the git repository.
-Any package manager (e.g. ``uv``) that can handle python projects using ``pyproject.toml`` files should be able to install PyQSense.
+Any package manager (e.g. ``uv``) that can handle python projects using ``pyproject.toml`` files should be able to install PyQSense too.
 
 .. _PyPI: https://pypi.org
 
 PyQSense comes with some optional dependency groups that one may choose to install in addition to the base package using ``pip``'s ``--group`` flag.
+They are mostly for development; at this time, no dependency group enables additional functionality in the experiment.
 Consult the ``pyproject.toml`` for the available groups.
 
 Configuration
 -------------
-You need to create a specific python module that accounts for variations in the equipment and experimental setup.
-The details are in :doc:`devices_module`.
+PyQSense reads a YAML configuration file on startup.
+It must be called ``devices.yaml`` and you must set the environment variable :envvar:`PYQSENSE_CONFIG_PATH` to the directory containing the file.
+The available options are browseable `here`_ and further documented in :doc:`options`.
 
-.. TODO:DOC mention the specific configuration system that we have using devices.yaml?
+.. _here: /_static/devices.schema.html
 
 Running PyQSense
 ----------------
 .. TODO:DOC
 
 .. how to start experiments, do not include info about our specific implementation of devices.py
+
+PyQSense is controlled through a GUI application. Launch the app by TODO:DOC
+
+* manually instantiate :py:class:`PyQSense.gui.Experiment_Process` and call `run_exp` method???
+* saves in .npz format
+* run from gui
+* no cli? TODO:DOC

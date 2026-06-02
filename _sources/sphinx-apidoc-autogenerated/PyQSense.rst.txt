@@ -7,7 +7,6 @@
 
    PyQSense.aux_control
    PyQSense.cam_control
-   PyQSense.const
    PyQSense.experiments
    PyQSense.gui
    PyQSense.ttl_control
