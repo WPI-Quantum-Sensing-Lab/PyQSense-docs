@@ -392,40 +392,37 @@ basename is <code class="docutils literal notranslate"><span class="pre">mylogfi
 <dl class="std envvar">
 <dt class="sig sig-object std" id="envvar-PYQSENSE_LOG_LEVEL">
 <span class="sig-name descname"><span class="pre">PYQSENSE_LOG_LEVEL</span></span><a class="headerlink" href="#envvar-PYQSENSE_LOG_LEVEL" title="Link to this definition">#</a></dt>
-<dd><p>Selects the verbosity of logs. Either an integer or one of the following
-strings:</p>
-<ul class="simple">
-<li><ul>
-<li><p>DEBUG</p></li>
-<li><p>10</p></li>
-</ul>
-</li>
-<li><ul>
-<li><p>INSTRUMENT</p></li>
-<li><p>15</p></li>
-</ul>
-</li>
-<li><ul>
-<li><p>INFO</p></li>
-<li><p>20</p></li>
-</ul>
-</li>
-<li><ul>
-<li><p>WARNING</p></li>
-<li><p>30</p></li>
-</ul>
-</li>
-<li><ul>
-<li><p>ERROR</p></li>
-<li><p>40</p></li>
-</ul>
-</li>
-<li><ul>
-<li><p>CRITICAL</p></li>
-<li><p>50</p></li>
-</ul>
-</li>
-</ul>
+<dd><p>Selects the verbosity of logs. The log level may be specified as an integer
+or a string, according to the table:</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id1">
+<caption><span class="caption-text">Log Levels</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Level name</p></th>
+<th class="head"><p>Level number</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>DEBUG</p></td>
+<td><p>10</p></td>
+</tr>
+<tr class="row-odd"><td><p>INSTRUMENT</p></td>
+<td><p>15</p></td>
+</tr>
+<tr class="row-even"><td><p>INFO</p></td>
+<td><p>20</p></td>
+</tr>
+<tr class="row-odd"><td><p>WARNING</p></td>
+<td><p>30</p></td>
+</tr>
+<tr class="row-even"><td><p>ERROR</p></td>
+<td><p>40</p></td>
+</tr>
+<tr class="row-odd"><td><p>CRITICAL</p></td>
+<td><p>50</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 <p>A lower log level means a higher volume of logs and more detail in messages.</p>
 </dd></dl>
 

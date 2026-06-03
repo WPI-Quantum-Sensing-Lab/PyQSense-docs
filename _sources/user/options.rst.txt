@@ -30,21 +30,18 @@ Environment Variables
 
 .. envvar:: PYQSENSE_LOG_LEVEL
 
-   Selects the verbosity of logs. Either an integer or one of the following
-   strings:
+   Selects the verbosity of logs. The log level may be specified as an integer
+   or a string, according to the table:
 
-   * - DEBUG
-     - 10
-   * - INSTRUMENT
-     - 15
-   * - INFO
-     - 20
-   * - WARNING
-     - 30
-   * - ERROR
-     - 40
-   * - CRITICAL
-     - 50
+   .. csv-table:: Log Levels
+      :header: "Level name", "Level number"
+
+      "DEBUG", 10
+      "INSTRUMENT", 15
+      "INFO", 20
+      "WARNING", 30
+      "ERROR", 40
+      "CRITICAL", 50
 
    A lower log level means a higher volume of logs and more detail in messages.
 
