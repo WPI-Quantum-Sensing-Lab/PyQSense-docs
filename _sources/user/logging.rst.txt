@@ -3,6 +3,6 @@ Logging in PyQSense
 
 PyQSense logs events to a file.
 They are stored in a platform-dependent directory; on Windows, they are found in ``%LOCALAPPDATA%/PyQSense``.
-On Linux, they are in ``/var/log``.
+On Linux, they are in ``${XDG_STATE_DIR}/PyQSense`` or ``~/.local/state/PyQSense`` as a fallback.
 The log file location and log verbosity are set using environment variables (see :doc:`options`).
 Additionally, the log level may be adjusted while an experiment is running through the menu bar at the top of the window.

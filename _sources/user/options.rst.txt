@@ -18,6 +18,36 @@ Environment Variables
    Points to the directory containing the YAML configuration file. Must be set
    by the user or PyQSense will exit.
 
+.. envvar:: PYQSENSE_LOG_PATH
+
+   The directory to write logs to. Default is ``%LocalAppData%\PyQSense`` on
+   Windows, and ``/var/log`` on unix.
+
+.. envvar:: PYQSENSE_LOG_STEM
+
+   The basename of the log file to write. For example, in ``mylogfile.3``, the
+   basename is ``mylogfile``.
+
+.. envvar:: PYQSENSE_LOG_LEVEL
+
+   Selects the verbosity of logs. Either an integer or one of the following
+   strings:
+
+   * - DEBUG
+     - 10
+   * - INSTRUMENT
+     - 15
+   * - INFO
+     - 20
+   * - WARNING
+     - 30
+   * - ERROR
+     - 40
+   * - CRITICAL
+     - 50
+
+   A lower log level means a higher volume of logs and more detail in messages.
+
 Example Configuration
 ---------------------
 
