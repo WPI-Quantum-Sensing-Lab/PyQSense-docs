@@ -379,8 +379,205 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="cam-control">
-<h1>📁 cam_control<a class="headerlink" href="#cam-control" title="Link to this heading">#</a></h1>
+  <section id="module-PyQSense.cam_control">
+<span id="cam-control"></span><h1>📁 cam_control<a class="headerlink" href="#module-PyQSense.cam_control" title="Link to this heading">#</a></h1>
+<p>Camera device abstraction layer.</p>
+<p>Wrapper for Basler’s pylon software library, which is based on the GenICam
+standard.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference external" href="https://www.emva.org/standards-technology/genicam/genicam-downloads/">GenICam Standard</a></dt><dd><p>Standard developed for a unified programming interface for cameras. The
+Basler camera we use is compliant with GenICam.</p>
+</dd>
+<dt><a class="reference external" href="https://docs.baslerweb.com/pylonapi/cpp/index_groups">Modules | Basler Product Documentation</a></dt><dd><p>C++ API documentation for Basler cameras (modules <strong>Instant Camera</strong> and
+<strong>Universal Instant Camera</strong> are of interest).</p>
+</dd>
+<dt><a class="reference external" href="https://docs.baslerweb.com/pylonapi/cpp/#parameter-reference">Parameters | Basler Product Documentation</a></dt><dd><p>List of parameters acceptable for camera objects.</p>
+</dd>
+<dt><a class="reference external" href="https://github.com/basler/pypylon/tree/master">basler/pypylon: The official python wrapper for the pylon Camera Software Suite</a></dt><dd><p>Python wrapper used in this project for pylon.</p>
+</dd>
+</dl>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="PyQSense.cam_control.Camera_Event_Handler">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">PyQSense.cam_control.</span></span><span class="sig-name descname"><span class="pre">Camera_Event_Handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyQSense.cam_control.Camera_Event_Handler" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">CameraEventHandler</span></code></p>
+<p>Custom camera event handling.</p>
+<p>Wraps the pylon API’s camera event handler <code class="docutils literal notranslate"><span class="pre">Pylon::CCameraEventHandler</span></code>,
+while providing two additional attributes.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PyQSense.cam_control.Camera_Event_Handler.running">
+<span class="sig-name descname"><span class="pre">running</span></span><a class="headerlink" href="#PyQSense.cam_control.Camera_Event_Handler.running" title="Link to this definition">#</a></dt>
+<dd><p>Flag set to indicate the camera is active.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PyQSense.cam_control.Camera_Event_Handler.stop_flag">
+<span class="sig-name descname"><span class="pre">stop_flag</span></span><a class="headerlink" href="#PyQSense.cam_control.Camera_Event_Handler.stop_flag" title="Link to this definition">#</a></dt>
+<dd><p>Flag to stop camera in the case of an error event.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyQSense.cam_control.Camera_Event_Handler.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PyQSense.cam_control.Camera_Event_Handler.__init__" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper for <code class="docutils literal notranslate"><span class="pre">Pylon::CCameraEventHandler</span></code> init.</p>
+<p>It also initializes <code class="docutils literal notranslate"><span class="pre">running</span></code> and <code class="docutils literal notranslate"><span class="pre">stop_flag</span></code> attributes to
+<code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyQSense.cam_control.Camera_Event_Handler.OnCameraEvent">
+<span class="sig-name descname"><span class="pre">OnCameraEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">camera</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_provided_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyQSense.cam_control.Camera_Event_Handler.OnCameraEvent" title="Link to this definition">#</a></dt>
+<dd><p>Set stop flag if an overtrigger is detected.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>camera</strong> (<em>pypylon.pylon.InstantCamera</em>) – The camera on which the
+event occurred.</p></li>
+<li><p><strong>user_provided_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Used to distinguish between camera events.
+In the C++ API, this is really of type <code class="docutils literal notranslate"><span class="pre">intptr_t</span></code>.</p></li>
+<li><p><strong>node</strong> (<em>pypylon.genicam.INode</em>) – The GenICam node from which the
+event is originating.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="PyQSense.cam_control.Basler_Camera">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">PyQSense.cam_control.</span></span><span class="sig-name descname"><span class="pre">Basler_Camera</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame_trigger</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">burst_trigger</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyQSense.cam_control.Basler_Camera" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Control a Basler camera.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PyQSense.cam_control.Basler_Camera.camera">
+<span class="sig-name descname"><span class="pre">camera</span></span><a class="headerlink" href="#PyQSense.cam_control.Basler_Camera.camera" title="Link to this definition">#</a></dt>
+<dd><p>Python-wrapped instance of pylon
+C++ API’s <code class="docutils literal notranslate"><span class="pre">Pylon::CInstantCamera</span></code> class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pypylon.pylon.InstantCamera</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PyQSense.cam_control.Basler_Camera.event_handler">
+<span class="sig-name descname"><span class="pre">event_handler</span></span><a class="headerlink" href="#PyQSense.cam_control.Basler_Camera.event_handler" title="Link to this definition">#</a></dt>
+<dd><p>Instance of <code class="docutils literal notranslate"><span class="pre">Camera_Event_Handler</span></code> class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pypylon.pylon.CameraEventHandler</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyQSense.cam_control.Basler_Camera.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame_trigger</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">burst_trigger</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyQSense.cam_control.Basler_Camera.__init__" title="Link to this definition">#</a></dt>
+<dd><p>Initialize the Basler camera.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frame_trigger</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The <a class="reference external" href="https://docs.baslerweb.com/triggered-image-acquisition#hardware-trigger-sources">hardware trigger source</a> for a single image acquisition. For example, “Line1”.</p></li>
+<li><p><strong>burst_trigger</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The <a class="reference external" href="https://docs.baslerweb.com/triggered-image-acquisition#hardware-trigger-sources">hardware trigger source</a> for a burst of images.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyQSense.cam_control.Basler_Camera.set_params">
+<span class="sig-name descname"><span class="pre">set_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyQSense.cam_control.Basler_Camera.set_params" title="Link to this definition">#</a></dt>
+<dd><p>Set additional parameters of the camera.</p>
+<p>Camera parameters are GenICam nodes; for this method to work, they must
+support the <code class="docutils literal notranslate"><span class="pre">GetValue()</span></code> method.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Pylon::CBaslerUniversalInstantCamera</span></code> class automatically creates
+members for each node in the camera description file; their values can
+be accessed through class member access. Each of these members is a node
+type, so they have the methods specified in the GenICam standard, for
+example <code class="docutils literal notranslate"><span class="pre">GetValue()</span></code>. Refer to the GenICam standard and the Basler
+camera product documentation for additional information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>args</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – Keyword arguments representing the camera properties
+and their corresponding values.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyQSense.cam_control.Basler_Camera.get_param">
+<span class="sig-name descname"><span class="pre">get_param</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyQSense.cam_control.Basler_Camera.get_param" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves the value of a parameter from the camera.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the parameter to retrieve.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The value of the parameter. The return type depends on the type of
+parameter.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyQSense.cam_control.Basler_Camera.run_acquisition">
+<span class="sig-name descname"><span class="pre">run_acquisition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_frames</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PyQSense.cam_control.Basler_Camera.run_acquisition" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves a sequence of images from the camera.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Number of image samples (collections of multiple
+images) to take.</p></li>
+<li><p><strong>sample_frames</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Number of raw images per sample.</p></li>
+<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Timeout value for retrieving an image capture in
+milliseconds. Defaults to 1000.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Array of images with shape</dt><dd><p>(n_samples, sample_frames, Height, Width), where Height and Width are
+camera parameters (GenICam nodes).</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.14)"><strong>RuntimeError</strong></a> – A camera overtrigger event has been detected.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyQSense.cam_control.Basler_Camera.open">
+<span class="sig-name descname"><span class="pre">open</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PyQSense.cam_control.Basler_Camera.open" title="Link to this definition">#</a></dt>
+<dd><p>Opens the camera device.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PyQSense.cam_control.Basler_Camera.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PyQSense.cam_control.Basler_Camera.close" title="Link to this definition">#</a></dt>
+<dd><p>Closes the camera device.</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 
@@ -421,6 +618,35 @@
                 <dialog id="pst-secondary-sidebar-modal"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#PyQSense.cam_control.Camera_Event_Handler"><code class="docutils literal notranslate"><span class="pre">Camera_Event_Handler</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyQSense.cam_control.Camera_Event_Handler.running"><code class="docutils literal notranslate"><span class="pre">Camera_Event_Handler.running</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyQSense.cam_control.Camera_Event_Handler.stop_flag"><code class="docutils literal notranslate"><span class="pre">Camera_Event_Handler.stop_flag</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyQSense.cam_control.Camera_Event_Handler.__init__"><code class="docutils literal notranslate"><span class="pre">Camera_Event_Handler.__init__()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyQSense.cam_control.Camera_Event_Handler.OnCameraEvent"><code class="docutils literal notranslate"><span class="pre">Camera_Event_Handler.OnCameraEvent()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#PyQSense.cam_control.Basler_Camera"><code class="docutils literal notranslate"><span class="pre">Basler_Camera</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyQSense.cam_control.Basler_Camera.camera"><code class="docutils literal notranslate"><span class="pre">Basler_Camera.camera</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyQSense.cam_control.Basler_Camera.event_handler"><code class="docutils literal notranslate"><span class="pre">Basler_Camera.event_handler</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyQSense.cam_control.Basler_Camera.__init__"><code class="docutils literal notranslate"><span class="pre">Basler_Camera.__init__()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyQSense.cam_control.Basler_Camera.set_params"><code class="docutils literal notranslate"><span class="pre">Basler_Camera.set_params()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyQSense.cam_control.Basler_Camera.get_param"><code class="docutils literal notranslate"><span class="pre">Basler_Camera.get_param()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyQSense.cam_control.Basler_Camera.run_acquisition"><code class="docutils literal notranslate"><span class="pre">Basler_Camera.run_acquisition()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyQSense.cam_control.Basler_Camera.open"><code class="docutils literal notranslate"><span class="pre">Basler_Camera.open()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyQSense.cam_control.Basler_Camera.close"><code class="docutils literal notranslate"><span class="pre">Basler_Camera.close()</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
 
   <div class="sidebar-secondary-item">
 
